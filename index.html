@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hire | Modern Job Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(145deg, #f0f7ff 0%, #e9f0fa 100%); min-height: 100vh; color: #1a2c3e; }
+        .navbar { background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding: 0.8rem 2rem; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .logo { font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, #0a66c2, #2c7cd6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .logo i { color: #0a66c2; margin-right: 8px; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: #1e293b; font-weight: 500; cursor: pointer; }
+        .nav-links a:hover { color: #0a66c2; }
+        .user-info { display: flex; align-items: center; gap: 1rem; background: #eef3fc; padding: 0.3rem 1rem 0.3rem 0.8rem; border-radius: 40px; }
+        .avatar { width: 34px; height: 34px; background: #0a66c2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .logout-btn { background: #ef4444; color: white; border: none; padding: 0.4rem 1rem; border-radius: 40px; cursor: pointer; }
+        .btn-primary { background: #0a66c2; color: white; border: none; padding: 0.5rem 1.2rem; border-radius: 40px; font-weight: 600; cursor: pointer; }
+        .btn-primary:hover { background: #004182; }
+        .btn-outline { background: transparent; border: 1.5px solid #0a66c2; color: #0a66c2; padding: 0.45rem 1.1rem; border-radius: 40px; cursor: pointer; }
+        .container { max-width: 1280px; margin: 2rem auto; padding: 0 2rem; }
+        .page-title { font-size: 2rem; font-weight: 700; margin-bottom: 1.8rem; background: linear-gradient(135deg, #1e293b, #334155); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.8rem; }
+        .job-card { background: white; border-radius: 24px; padding: 1.5rem; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .job-card:hover { transform: translateY(-6px); box-shadow: 0 20px 30px -12px rgba(10,102,194,0.15); }
+        .job-company { font-size: 1.25rem; font-weight: 700; color: #0a66c2; }
+        .job-role { font-size: 1rem; font-weight: 600; margin: 0.5rem 0; }
+        .job-description { color: #475569; margin: 1rem 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .job-meta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.75rem; }
+        .job-meta span { background: #f1f5f9; padding: 0.2rem 0.7rem; border-radius: 30px; }
+        .apply-btn { width: 100%; background: #0a66c2; color: white; border: none; padding: 0.65rem; border-radius: 40px; font-weight: 600; cursor: pointer; }
+        .apply-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .filter-bar { background: white; border-radius: 60px; padding: 0.6rem 1.2rem; margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+        .filter-bar input, .filter-bar select { padding: 0.5rem 1rem; border: 1px solid #e2e8f0; border-radius: 40px; }
+        .auth-container { min-height: 85vh; display: flex; align-items: center; justify-content: center; }
+        .auth-card { background: white; border-radius: 32px; padding: 2.5rem; width: 100%; max-width: 460px; box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2); }
+        .auth-title { font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem; color: #0a66c2; }
+        .input-group { margin-bottom: 1.2rem; }
+        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 0.7rem 1rem; border: 1.5px solid #e2e8f0; border-radius: 60px; }
+        .profile-card { background: white; border-radius: 32px; padding: 2rem; max-width: 600px; margin: 0 auto; }
+        .avatar-large { width: 100px; height: 100px; background: #0a66c2; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: white; margin: 0 auto 1rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: white; border-radius: 24px; padding: 1.5rem; text-align: center; }
+        .stat-number { font-size: 2.2rem; font-weight: 700; color: #0a66c2; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; border-radius: 32px; padding: 2rem; width: 90%; max-width: 450px; position: relative; }
+        .modal-close { position: absolute; top: 1rem; right: 1.5rem; font-size: 1.8rem; cursor: pointer; }
+        .alert { padding: 0.7rem; border-radius: 60px; margin-bottom: 1rem; text-align: center; }
+        .alert-success { background: #d1fae5; color: #065f46; }
+        .alert-error { background: #fee2e2; color: #991b1b; }
+        @media (max-width: 768px) { .navbar { flex-direction: column; } .jobs-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+
+<div id="forgotModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeForgotModal()">&times;</span>
+        <h3>Reset Password</h3>
+        <div id="forgotStep1">
+            <div class="input-group"><input type="email" id="resetEmail" placeholder="Your email"></div>
+            <button class="btn-primary" style="width:100%;" onclick="requestOTP()">Send OTP</button>
+        </div>
+        <div id="forgotStep2" style="display:none;">
+            <div class="input-group"><input type="text" id="otpCode" placeholder="OTP"></div>
+            <div class="input-group"><input type="password" id="newPassword" placeholder="New password (min 6)"></div>
+            <button class="btn-primary" style="width:100%;" onclick="resetPasswordWithOTP()">Reset Password</button>
+        </div>
+        <div id="forgotMessage" class="alert" style="display:none;"></div>
+    </div>
+</div>
+
+<script>
+    const API = '/api';
+    let currentUser = null;
+    let currentPage = 'login';
+    let forgotEmail = '';
+    let jobs = [];
+
+    function showAlert(msg, type) {
+        const div = document.getElementById('alert-message');
+        if (div) {
+            div.textContent = msg;
+            div.className = `alert alert-${type}`;
+            div.style.display = 'block';
+            setTimeout(() => div.style.display = 'none', 3000);
+        }
+    }
+
+    function showModalMessage(msg, isError) {
+        const d = document.getElementById('forgotMessage');
+        d.textContent = msg;
+        d.className = `alert alert-${isError ? 'error' : 'success'}`;
+        d.style.display = 'block';
+        setTimeout(() => d.style.display = 'none', 3000);
+    }
+
+    function openForgotModal() {
+        document.getElementById('forgotModal').style.display = 'flex';
+        document.getElementById('forgotStep1').style.display = 'block';
+        document.getElementById('forgotStep2').style.display = 'none';
+        document.getElementById('forgotMessage').style.display = 'none';
+    }
+
+    function closeForgotModal() { document.getElementById('forgotModal').style.display = 'none'; }
+
+    function saveUser(user, token) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        currentUser = user;
+    }
+
+    function logout() {
+        localStorage.clear();
+        currentUser = null;
+        navigateTo('login');
+    }
+
+    function navigateTo(page) { currentPage = page; render(); }
+
+    async function registerUser(name, email, password) {
+        try {
+            const res = await fetch(`${API}/register`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+            const data = await res.json();
+            if (data.success) { saveUser(data.user, data.token); navigateTo('dashboard'); }
+            else showAlert(data.message, 'error');
+        } catch (e) { showAlert('Connection error', 'error'); }
+    }
+
+    async function loginUser(email, password) {
+        try {
+            const res = await fetch(`${API}/login`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            if (data.success) { saveUser(data.user, data.token); navigateTo('dashboard'); }
+            else showAlert(data.message, 'error');
+        } catch (e) { showAlert('Connection error', 'error'); }
+    }
+
+    async function requestOTP() {
+        const email = document.getElementById('resetEmail').value;
+        if (!email) return showModalMessage('Enter email', true);
+        try {
+            const res = await fetch(`${API}/forgot-password`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            if (data.success) {
+                forgotEmail = email;
+                showModalMessage('OTP sent (check terminal)', false);
+                document.getElementById('forgotStep1').style.display = 'none';
+                document.getElementById('forgotStep2').style.display = 'block';
+            } else showModalMessage(data.message, true);
+        } catch (e) { showModalMessage('Error', true); }
+    }
+
+    async function resetPasswordWithOTP() {
+        const otp = document.getElementById('otpCode').value;
+        const newPassword = document.getElementById('newPassword').value;
+        if (!otp || !newPassword) return showModalMessage('Fill all fields', true);
+        if (newPassword.length < 6) return showModalMessage('Password min 6 chars', true);
+        try {
+            const res = await fetch(`${API}/reset-password`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: forgotEmail, otp, newPassword })
+            });
+            const data = await res.json();
+            if (data.success) { showModalMessage('Password reset! Please login.', false); closeForgotModal(); }
+            else showModalMessage(data.message, true);
+        } catch (e) { showModalMessage('Error', true); }
+    }
+
+    async function loadJobs() {
+        try {
+            const res = await fetch(`${API}/jobs`);
+            const data = await res.json();
+            jobs = data.jobs || [];
+            renderDashboard();
+        } catch (err) { showAlert('Failed to load jobs', 'error'); }
+    }
+
+    async function checkApplied(jobId) {
+        if (!currentUser) return false;
+        try {
+            const res = await fetch(`${API}/check-application/${currentUser.id}/${jobId}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            const data = await res.json();
+            return data.applied;
+        } catch { return false; }
+    }
+
+    async function applyForJob(jobId) {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.pdf,.docx';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            const fd = new FormData();
+            fd.append('jobId', jobId);
+            if (file) fd.append('resume', file);
+            try {
+                const res = await fetch(`${API}/apply`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                    body: fd
+                });
+                const data = await res.json();
+                if (data.success) { showAlert('Application submitted!', 'success'); loadJobs(); }
+                else showAlert(data.message, 'error');
+            } catch (err) { showAlert('Error applying', 'error'); }
+        };
+        input.click();
+    }
+
+    function renderLogin() {
+        return `<div class="auth-container">
+            <div class="auth-card">
+                <h2 class="auth-title">Welcome Back</h2>
+                <div id="alert-message" class="alert" style="display:none;"></div>
+                <form id="loginForm">
+                    <div class="input-group"><input type="email" id="email" placeholder="Email" required></div>
+                    <div class="input-group"><input type="password" id="password" placeholder="Password" required></div>
+                    <button type="submit" class="btn-primary" style="width:100%;">Sign In</button>
+                </form>
+                <p style="text-align:center; margin-top:1rem;"><a href="#" onclick="openForgotModal()">Forgot password?</a></p>
+                <p style="text-align:center;">New user? <a href="#" onclick="navigateTo('register')">Create account</a></p>
+                <p style="font-size:0.8rem; margin-top:1rem;">Demo admin: admin@jobportal.com / admin123</p>
+            </div>
+        </div>`;
+    }
+
+    function renderRegister() {
+        return `<div class="auth-container">
+            <div class="auth-card">
+                <h2 class="auth-title">Create Account</h2>
+                <div id="alert-message" class="alert" style="display:none;"></div>
+                <form id="registerForm">
+                    <div class="input-group"><input type="text" id="name" placeholder="Full Name" required></div>
+                    <div class="input-group"><input type="email" id="email" placeholder="Email" required></div>
+                    <div class="input-group"><input type="password" id="password" placeholder="Password (min 6)" required></div>
+                    <button type="submit" class="btn-primary" style="width:100%;">Sign Up</button>
+                </form>
+                <p style="text-align:center; margin-top:1rem;">Already have an account? <a href="#" onclick="navigateTo('login')">Sign In</a></p>
+            </div>
+        </div>`;
+    }
+
+    async function renderDashboard() {
+        const applied = {};
+        for (const job of jobs) applied[job._id] = await checkApplied(job._id);
+        const jobsHtml = jobs.length === 0 ? '<p>No jobs found</p>' :
+            `<div class="jobs-grid">${jobs.map(job => `
+                <div class="job-card">
+                    <div class="job-company">${escapeHtml(job.company)}</div>
+                    <div class="job-role">${escapeHtml(job.role)}</div>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
+                        <span><i class="fas fa-rupee-sign"></i> ${job.salary}</span>
+                        <span><i class="fas fa-clock"></i> ${job.type}</span>
+                    </div>
+                    <div class="job-description">${escapeHtml(job.description)}</div>
+                    <button class="apply-btn" onclick="applyForJob('${job._id}')" ${applied[job._id] ? 'disabled' : ''}>
+                        ${applied[job._id] ? '<i class="fas fa-check"></i> Applied' : '<i class="fas fa-paper-plane"></i> Apply Now'}
+                    </button>
+                </div>
+            `).join('')}</div>`;
+        return `<div class="container">
+            <h1 class="page-title"><i class="fas fa-briefcase"></i> Explore Opportunities</h1>
+            <div class="filter-bar">
+                <input type="text" id="searchInput" placeholder="Search company, role...">
+                <input type="text" id="locationInput" placeholder="Location">
+                <select id="typeSelect"><option value="">All Types</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select>
+                <button class="btn-outline" onclick="applyFilters()"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div id="alert-message" class="alert" style="display:none;"></div>
+            ${jobsHtml}
+        </div>`;
+    }
+
+    window.applyFilters = async () => {
+        const search = document.getElementById('searchInput').value;
+        const location = document.getElementById('locationInput').value;
+        const type = document.getElementById('typeSelect').value;
+        const params = new URLSearchParams();
+        if (search) params.append('search', search);
+        if (location) params.append('location', location);
+        if (type) params.append('type', type);
+        try {
+            const res = await fetch(`${API}/jobs?${params.toString()}`);
+            const data = await res.json();
+            jobs = data.jobs || [];
+            renderDashboard();
+        } catch (err) { showAlert('Filter error', 'error'); }
+    };
+
+    async function renderMyApplications() {
+        try {
+            const res = await fetch(`${API}/my-applications/${currentUser.id}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            const apps = await res.json();
+            const html = apps.length === 0 ? '<p>No applications yet</p>' :
+                `<div class="jobs-grid">${apps.map(app => `
+                    <div class="job-card">
+                        <div class="job-company">${escapeHtml(app.jobId?.company)}</div>
+                        <div class="job-role">${escapeHtml(app.jobId?.role)}</div>
+                        <p>Applied: ${new Date(app.appliedAt).toLocaleDateString()}</p>
+                        <p>Status: ${app.status}</p>
+                        ${app.resumeUrl ? `<a href="${app.resumeUrl}" target="_blank">View Resume</a>` : ''}
+                    </div>
+                `).join('')}</div>`;
+            return `<div class="container"><h1 class="page-title">My Applications</h1>${html}</div>`;
+        } catch(e) { return '<div class="container">Error loading applications</div>'; }
+    }
+
+    async function renderProfile() {
+        return `<div class="container">
+            <h1 class="page-title">My Profile</h1>
+            <div class="profile-card">
+                <div class="avatar-large">${(currentUser.name[0] || 'U').toUpperCase()}</div>
+                <div class="input-group"><label>Name</label><input type="text" id="profileName" value="${escapeHtml(currentUser.name)}"></div>
+                <div class="input-group"><label>Email</label><input type="email" id="profileEmail" value="${escapeHtml(currentUser.email)}"></div>
+                <button class="btn-primary" onclick="updateProfile()">Update Profile</button>
+                <hr style="margin:1.5rem 0;">
+                <h3>Change Password</h3>
+                <div class="input-group"><input type="password" id="curPwd" placeholder="Current password"></div>
+                <div class="input-group"><input type="password" id="newPwd" placeholder="New password (min 6)"></div>
+                <div class="input-group"><input type="password" id="confirmPwd" placeholder="Confirm new password"></div>
+                <button class="btn-primary" onclick="changePassword()">Change Password</button>
+            </div>
+        </div>`;
+    }
+
+    window.updateProfile = async () => {
+        const name = document.getElementById('profileName').value;
+        const email = document.getElementById('profileEmail').value;
+        try {
+            const res = await fetch(`${API}/users/profile`, {
+                method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                body: JSON.stringify({ name, email })
+            });
+            const data = await res.json();
+            if (data.success) {
+                const stored = JSON.parse(localStorage.getItem('user'));
+                stored.name = data.user.name;
+                stored.email = data.user.email;
+                localStorage.setItem('user', JSON.stringify(stored));
+                currentUser = stored;
+                showAlert('Profile updated', 'success');
+                render();
+            } else showAlert(data.message, 'error');
+        } catch(e) { showAlert('Error', 'error'); }
+    };
+
+    window.changePassword = async () => {
+        const cur = document.getElementById('curPwd').value;
+        const newPwd = document.getElementById('newPwd').value;
+        const conf = document.getElementById('confirmPwd').value;
+        if (!cur || !newPwd || !conf) return showAlert('All fields required', 'error');
+        if (newPwd !== conf) return showAlert('Passwords do not match', 'error');
+        if (newPwd.length < 6) return showAlert('Password min 6 chars', 'error');
+        try {
+            const res = await fetch(`${API}/users/change-password`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                body: JSON.stringify({ currentPassword: cur, newPassword: newPwd })
+            });
+            const data = await res.json();
+            if (data.success) showAlert('Password changed', 'success');
+            else showAlert(data.message, 'error');
+        } catch(e) { showAlert('Error', 'error'); }
+    };
+
+    async function renderAdmin() {
+        try {
+            const statsRes = await fetch(`${API}/admin/stats`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+            const stats = await statsRes.json();
+            const jobsRes = await fetch(`${API}/jobs`);
+            const jobsData = await jobsRes.json();
+            const allJobs = jobsData.jobs || [];
+            const jobsHtml = `<div><h3>All Jobs</h3>${allJobs.map(job => `
+                <div style="background:white; border-radius:20px; padding:1rem; margin-bottom:0.5rem; display:flex; justify-content:space-between;">
+                    <div><strong>${job.company}</strong> - ${job.role}</div>
+                    <button class="btn-outline" onclick="deleteJob('${job._id}')">Delete</button>
+                </div>`).join('')}</div>`;
+            return `<div class="container">
+                <h1 class="page-title">Admin Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number">${stats.totalJobs || 0}</div><div>Total Jobs</div></div>
+                    <div class="stat-card"><div class="stat-number">${stats.totalUsers || 0}</div><div>Total Users</div></div>
+                    <div class="stat-card"><div class="stat-number">${stats.totalApplications || 0}</div><div>Applications</div></div>
+                </div>
+                <button class="btn-primary" onclick="toggleJobForm()">+ Add New Job</button>
+                <div id="jobForm" style="display:none; background:white; border-radius:24px; padding:1.5rem; margin:1rem 0;">
+                    <h3>New Job</h3>
+                    <form id="createJobForm">
+                        <div class="input-group"><input type="text" id="company" placeholder="Company" required></div>
+                        <div class="input-group"><input type="text" id="role" placeholder="Role" required></div>
+                        <div class="input-group"><textarea id="description" placeholder="Description" required></textarea></div>
+                        <div class="input-group"><input type="text" id="location" placeholder="Location" value="Remote"></div>
+                        <div class="input-group"><input type="text" id="salary" placeholder="Salary" value="Negotiable"></div>
+                        <div class="input-group"><select id="type"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select></div>
+                        <button type="submit" class="btn-primary">Publish</button>
+                    </form>
+                </div>
+                ${jobsHtml}
+            </div>`;
+        } catch(e) { return '<div class="container">Error loading admin data</div>'; }
+    }
+
+    window.deleteJob = async (id) => {
+        if (confirm('Delete this job?')) {
+            try {
+                await fetch(`${API}/jobs/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+                showAlert('Job deleted', 'success');
+                render();
+            } catch(e) { showAlert('Error', 'error'); }
+        }
+    };
+    window.toggleJobForm = () => { const f = document.getElementById('jobForm'); if (f) f.style.display = f.style.display === 'none' ? 'block' : 'none'; };
+
+    function renderNavbar() {
+        if (!currentUser) {
+            return `<nav class="navbar"><div class="logo"><i class="fas fa-briefcase"></i> Hire</div><div class="nav-links"><a onclick="navigateTo('login')" class="btn-outline">Login</a><a onclick="navigateTo('register')" class="btn-outline">Sign Up</a></div></nav>`;
+        }
+        return `<nav class="navbar">
+            <div class="logo"><i class="fas fa-briefcase"></i> Hire</div>
+            <div class="nav-links">
+                <a onclick="navigateTo('dashboard')">Jobs</a>
+                <a onclick="navigateTo('my-applications')">My Applications</a>
+                <a onclick="navigateTo('profile')">Profile</a>
+                ${currentUser.role === 'admin' ? '<a onclick="navigateTo(\'admin\')">Admin</a>' : ''}
+                <div class="user-info"><div class="avatar">${(currentUser.name[0] || 'U').toUpperCase()}</div><span>${escapeHtml(currentUser.name)}</span><button class="logout-btn" onclick="logout()">Logout</button></div>
+            </div>
+        </nav>`;
+    }
+
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+    async function render() {
+        const app = document.getElementById('app');
+        const stored = localStorage.getItem('user');
+        if (stored && !currentUser) currentUser = JSON.parse(stored);
+        const navbar = renderNavbar();
+        let content = '';
+        if (!currentUser) {
+            if (currentPage === 'register') content = renderRegister();
+            else content = renderLogin();
+        } else {
+            if (currentPage === 'admin' && currentUser.role === 'admin') content = await renderAdmin();
+            else if (currentPage === 'my-applications') content = await renderMyApplications();
+            else if (currentPage === 'profile') content = await renderProfile();
+            else { await loadJobs(); content = await renderDashboard(); }
+        }
+        app.innerHTML = navbar + content;
+        if (!currentUser) {
+            const lf = document.getElementById('loginForm');
+            if (lf) lf.onsubmit = (e) => { e.preventDefault(); loginUser(document.getElementById('email').value, document.getElementById('password').value); };
+            const rf = document.getElementById('registerForm');
+            if (rf) rf.onsubmit = (e) => { e.preventDefault(); const name = document.getElementById('name').value, email = document.getElementById('email').value, pwd = document.getElementById('password').value; if (pwd.length < 6) showAlert('Password too short', 'error'); else registerUser(name, email, pwd); };
+        }
+        const cjf = document.getElementById('createJobForm');
+        if (cjf) cjf.onsubmit = async (e) => {
+            e.preventDefault();
+            const jobData = {
+                company: document.getElementById('company').value,
+                role: document.getElementById('role').value,
+                description: document.getElementById('description').value,
+                location: document.getElementById('location').value,
+                salary: document.getElementById('salary').value,
+                type: document.getElementById('type').value
+            };
+            try {
+                const res = await fetch(`${API}/jobs`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                    body: JSON.stringify(jobData)
+                });
+                const data = await res.json();
+                if (data.success) { showAlert('Job posted!', 'success'); document.getElementById('jobForm').style.display = 'none'; cjf.reset(); render(); }
+                else showAlert(data.message, 'error');
+            } catch(e) { showAlert('Error', 'error'); }
+        };
+    }
+
+    window.navigateTo = navigateTo;
+    window.logout = logout;
+    window.openForgotModal = openForgotModal;
+    window.closeForgotModal = closeForgotModal;
+    window.requestOTP = requestOTP;
+    window.resetPasswordWithOTP = resetPasswordWithOTP;
+    window.applyForJob = applyForJob;
+
+    render();
+</script>
+</body>
+</html>
