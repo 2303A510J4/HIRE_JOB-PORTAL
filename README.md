@@ -1,10 +1,3 @@
-# HIRE_JOB-PORTAL
-Hire – Job Portal System built with MERN stack (MongoDB, Express, React, Node.js). Features include authentication, role-based access, job search, resume upload, application tracking, and admin dashboard.  
-Got it 🔥 — you want **exact same professional README format** for your project.
-Here is your **premium GitHub README.md (copy paste directly)** 👇
-
----
-
 # 💼 Hire – Job Portal System
 
 A full-stack MERN (MongoDB, Express.js, React.js, Node.js) web application designed to connect job seekers with employers through a modern, efficient, and user-friendly platform.
